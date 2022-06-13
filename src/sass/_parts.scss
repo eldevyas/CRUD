@@ -1,0 +1,61 @@
+// Reverse Corners
+#curved-corner-bottomleft,
+#curved-corner-bottomright,
+#curved-corner-topleft,
+#curved-corner-topright {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    position: relative;
+    transform: scale(0.6);
+}
+
+#curved-corner-bottomright {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform-origin: bottom right;
+}
+
+#curved-corner-topright {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform-origin: top right;
+}
+
+#curved-corner-bottomleft:before,
+#curved-corner-bottomright:before,
+#curved-corner-topleft:before,
+#curved-corner-topright:before {
+    content: "";
+    display: block;
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    border-radius: 50%;
+}
+
+#curved-corner-bottomleft:before {
+    bottom: 0;
+    left: 0;
+    box-shadow: -50px 50px 0 0 $C5;
+}
+
+#curved-corner-bottomright:before {
+    bottom: 0;
+    right: 0;
+    box-shadow: 50px 50px 0 0 $C5;
+}
+
+#curved-corner-topleft:before {
+    top: 0;
+    left: 0;
+    box-shadow: -50px -50px 0 0 $C5;
+}
+
+#curved-corner-topright:before {
+    top: 0;
+    right: 0;
+    box-shadow: 50px -50px 0 0 $C5;
+}

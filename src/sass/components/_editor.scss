@@ -1,0 +1,92 @@
+.Container {
+    @include EditorContainer(25px, 25px);
+    @include FlexRowJustifyCenter();
+    align-items: center;
+    .Editor {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba($C5, 0.25);
+        width: AspectRatio-2-1(375px);
+        height: 375px;
+        border-radius: 25px;
+        backdrop-filter: blur(30px);
+        border: 1px solid rgba($C5, 0.25);
+        z-index: 1;
+        overflow: hidden;
+        .Shadow {
+            content: '';
+            @include Center;
+            width: AspectRatio-2-1(375px);
+            height: 375px;
+            background-color: rgba(#000, 1);
+            filter: blur(50px);
+            z-index: -1;
+        }
+        .Sidebar {
+            position: relative;
+            width: 175px;
+            height: 100%;
+            background: rgba($C5, 0.25);
+            .Buttons {
+                @include CenterHorizontal();
+                top: 15px;
+                left: 25%;
+                $height: 10px;
+                $margin: 5px;
+                height: $height;
+                width: calc($height * 3 + $margin * 2);
+                @include FlexRowJustifyBetween();
+                div {
+                    height: $height;
+                    width: $height;
+                    background: rgba($C1, 1);
+                    border-radius: 50%;
+                    margin: 0 0px;
+                    position: relative;
+                    overflow: hidden;
+                    @include FlexRowJustifyCenter;
+                    align-items: center;
+                    img {
+                        position: absolute;
+                        object-fit: cover;
+                        opacity: 0;
+                        transform: scale(0.75) translateX(-0.7px);
+                        user-select: none;
+                    }
+                    &:hover {
+                        cursor: pointer;
+                        border: 1.25px solid rgba(#000, 0);
+                        img {
+                            opacity: 1;
+                        }
+                    }
+                }
+                #Red {
+                    background: rgba($AppleRed, 1);
+                    img {
+                        transform: scale(0.75) translateX(-0.7px);
+                    }
+                }
+                #Yellow {
+                    background: rgba($AppleYellow, 1);
+                    img {
+                        transform: scale(0.75) translateX(-0.55px);
+                    }
+                }
+                #Green {
+                    background: rgba($AppleGreen, 1);
+                    img {
+                        transform: scale(0.75) translate(-0.45px, -0.1px);
+                    }
+                }
+            }
+        }
+        .Content {
+            width: calc(AspectRatio-2-1(375px) - 175px);
+            height: 100%;
+            background: $C5;
+        }
+    }
+}

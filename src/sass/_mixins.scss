@@ -1,0 +1,88 @@
+@mixin EditorContainer($mgWidth, $mgHeight) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - $mgWidth);
+    height: calc(100% - $mgHeight);
+    background: rgba(0, 0, 0, 0);
+    position: relative;
+}
+
+@mixin CenterHorizontal {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@mixin CenterVertical {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@mixin Center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@mixin FlexRowJustifyCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin FlexRowJustifyBetween {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin FlexRowJustifyAround {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+@mixin FlexRowJustifyEnd {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+@mixin FlexRowJustifyStart {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+@mixin FlexColumnJustifyCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin FlexColumnJustifyBetween {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin FlexColumnJustifyAround {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+@mixin FlexColumnJustifyEnd {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+@mixin FlexColumnJustifyStart {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}

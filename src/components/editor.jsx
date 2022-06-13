@@ -2,16 +2,16 @@ import React from 'react';
 
 const Editor = () => {
     return(
-        <div class="Container">
-            {/* Shadow Division */}
-            <div class="Shadow"></div>
-            
-            <div class="Editor">
+        <div className="Container">
+
+            <div className="Editor" id='drag'>
+
+                <section id="Drag"></section>
                 {/* Sidebar Section */}
-                <div class="Sidebar">
+                <div className="Sidebar">
 
                     {/* MacOS Styled Buttons */}
-                    <div class="Buttons">
+                    <div className="Buttons">
                         <div id="Red">
                             <img src="src/assets/close.svg" />
                         </div>
@@ -25,10 +25,10 @@ const Editor = () => {
 
                     {/* Navigation Links */}
 
-                    <div class="Navigation">
-                        <div class="Login"></div>
-                        <div class="Register"></div>
-                        <div class="Manage"></div>
+                    <div className="Navigation">
+                        <div className="Login"></div>
+                        <div className="Register"></div>
+                        <div className="Manage"></div>
                     </div>
 
                     {/* Curved Corners on the right side. */}
@@ -37,7 +37,7 @@ const Editor = () => {
                     <div id="curved-corner-topright"></div>
                 </div>
                 {/* Content Section */}
-                <div class="Content">
+                <div className="Content">
 
                 </div>
             </div>

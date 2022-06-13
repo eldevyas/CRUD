@@ -3,11 +3,14 @@
     @include FlexRowJustifyCenter();
     align-items: center;
     .Editor {
-        position: relative;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        transform: translate(-85%, -80%);
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: rgba($C5, 0.25);
+        background: rgba($C5, 0.1);
         width: AspectRatio-2-1(375px);
         height: 375px;
         border-radius: 25px;
@@ -15,20 +18,19 @@
         border: 1px solid rgba($C5, 0.25);
         z-index: 1;
         overflow: hidden;
-        .Shadow {
-            content: '';
-            @include Center;
-            width: AspectRatio-2-1(375px);
-            height: 375px;
-            background-color: rgba(#000, 1);
-            filter: blur(50px);
-            z-index: -1;
+        box-shadow: 0 22px 70px 4px rgba(0, 0, 0, 0.56);
+        #Drag {
+            position: absolute;
+            cursor: move;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
         }
         .Sidebar {
             position: relative;
             width: 175px;
             height: 100%;
-            background: rgba($C5, 0.25);
             .Buttons {
                 @include CenterHorizontal();
                 top: 15px;
@@ -41,7 +43,6 @@
                 div {
                     height: $height;
                     width: $height;
-                    background: rgba($C1, 1);
                     border-radius: 50%;
                     margin: 0 0px;
                     position: relative;
@@ -66,7 +67,7 @@
                 #Red {
                     background: rgba($AppleRed, 1);
                     img {
-                        transform: scale(0.75) translateX(-0.7px);
+                        transform: scale(0.75) translateX(0.1px);
                     }
                 }
                 #Yellow {

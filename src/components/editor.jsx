@@ -2,6 +2,12 @@ import React from 'react';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import LoginIcon from '@mui/icons-material/Login';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import Grid3x3Icon from '@mui/icons-material/Grid3x3';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import LockIcon from '@mui/icons-material/Lock';
+import SettingsIcon from '@mui/icons-material/Settings';
+
 
 const Editor = () => {
     return(
@@ -30,15 +36,15 @@ const Editor = () => {
 
                     <div className="Navigation">
                         <div id="Navigator"></div>
-                        <div className="Item Login">
+                        <div className="Item Login" target="Login" title="Sign in" description="Login to your account" button=''>
                             <LoginIcon className="LoginIcon"/>
                             <p>Login</p>
                         </div>
-                        <div className="Item Register">
+                        <div className="Item Register" target='Register' title='Sign up' description="Register a new account" button=''>
                             <SupervisedUserCircleIcon className="RegisterIcon"/>
                             <p>Register</p>
                         </div>
-                        <div className="Item Manage" id="Current">
+                        <div className="Item Manage" id="Current" target='Manage' title='Users List' description="Create, Read, Update & Delete" button='Add User'>
                             <ManageAccountsIcon className="ManageIcon"/>
                             <p>Manage</p>
                         </div>
@@ -53,37 +59,41 @@ const Editor = () => {
                 <div className="Content">
                         <div className="Header">
                             <div className="Title">
-                                <h1>USERS LIST</h1>
-                                <p>Create, Read, Update & Delete</p>
+                                <h1 id='Title'>USERS LIST</h1>
+                                <p id='Description'>Create, Read, Update & Delete</p>
                             </div>
 
-                            <div className='Button'>
+                            <div className='Button' id='Button'>
                                 Add User
                             </div>
 
                         </div>
-                    <div className="Section">
-                        <div className="Page Table">
+                    <div className="Section" id="Section">
+                        <div className="Page Login" id="Login"></div>
+
+                        <div className="Page Register" id='Register'></div>
+
+                        <div className="Page Manage" id="Manage">
                             <div className='Head'>
-                                
-                                <div className="ID">
-                                    <p></p>
-                                </div>
 
                                 <div className="ID">
-                                    <p></p>
+                                    <p>ID</p>
                                 </div>
 
-                                <div className="ID">
-                                    <p></p>
+                                <div className="Username">
+                                    <p>Username</p>
                                 </div>
 
-                                <div className="ID">
-                                    <p></p>
+                                <div className="E-mail">
+                                    <p>E-mail</p>
                                 </div>
 
-                                <div className="ID">
-                                    <p></p>
+                                <div className="Password">
+                                    <p>Password</p>
+                                </div>
+
+                                <div className="Actions">
+                                    <p>Actions</p>
                                 </div>
 
                             </div>

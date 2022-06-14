@@ -3,10 +3,7 @@
     @include FlexRowJustifyCenter();
     align-items: center;
     .Editor {
-        position: absolute;
-        top: 0%;
-        left: 0%;
-        transform: translate(-85%, -80%);
+        position: fixed;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -25,12 +22,15 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 30px;
+            height: 10px;
+            background-color: transparent;
+            z-index: 10;
         }
         .Sidebar {
             position: relative;
             width: 175px;
             height: 100%;
+            user-select: none;
             .Buttons {
                 @include CenterHorizontal();
                 top: 15px;
@@ -83,11 +83,124 @@
                     }
                 }
             }
+            .Navigation {
+                position: relative;
+                $height: 35px;
+                width: 100%;
+                height: calc($height * 3);
+                @include Center();
+                .Item {
+                    width: 100%;
+                    height: $height;
+                    @include FlexRowJustifyStart();
+                    align-items: center;
+                    color: $C5;
+                    font-size: 12px;
+                    z-index: 2;
+                    transition: all 300ms ease;
+                    svg {
+                        margin-left: 40px;
+                        font-size: 18px;
+                    }
+                    p {
+                        margin: 0;
+                        margin-left: 15px;
+                    }
+                    &:hover {
+                        color: #555;
+                        cursor: pointer;
+                    }
+                }
+                #Navigator {
+                    display: inline-block;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: $height;
+                    background-color: $C5;
+                    z-index: -1;
+                    transition: all 300ms ease-in-out;
+                }
+                #Current {
+                    color: #555;
+                    &:hover {
+                        color: $C3;
+                        cursor: default;
+                    }
+                }
+            }
         }
         .Content {
+            position: relative;
             width: calc(AspectRatio-2-1(375px) - 175px);
             height: 100%;
             background: $C5;
+            @include FlexRowJustifyCenter;
+            .Header {
+                margin-top: 10px;
+                position: absolute;
+                top: 0;
+                @include CenterHorizontal();
+                width: 90%;
+                height: 45px;
+                @include FlexRowJustifyBetween;
+                background-color: transparent;
+                user-select: none;
+                .Title {
+                    height: 100%;
+                    text-transform: uppercase;
+                    color: $C4;
+                    @include FlexRowJustifyStart;
+                    h1 {
+                        font-size: 14px;
+                        font-weight: bold;
+                        margin-right: 5px;
+                    }
+                    p {
+                        font-size: 14px;
+                        font-weight: 100;
+                    }
+                }
+                .Button {
+                    position: relative;
+                    $Padding: 15px;
+                    padding: calc($Padding / 2.5) $Padding;
+                    font-size: calc(12px);
+                    @include FlexRowJustifyCenter;
+                    background-color: $C3;
+                    color: $C5;
+                    border-radius: 5px;
+                    text-transform: uppercase;
+                    font-weight: 900;
+                    &::before {
+                        content: '';
+                        width: 60%;
+                        height: 100%;
+                        position: absolute;
+                        bottom: -5px;
+                        @include CenterHorizontal();
+                        background-color: $C3;
+                        opacity: 0.5;
+                        filter: blur(50px);
+                        z-index: -1;
+                    }
+                    &:hover {
+                        cursor: pointer;
+                        background-color: $C2;
+                        &:active {
+                            background-color: $C1;
+                        }
+                    }
+                }
+            }
+            .Section {
+                width: 90%;
+                height: 82.5%;
+                align-self: flex-end;
+                // border: 1px solid rgba($C1, 1);
+                margin-bottom: 2.5%;
+            }
         }
     }
 }

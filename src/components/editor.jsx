@@ -1,13 +1,22 @@
 import React from 'react';
-import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
-import LoginIcon from '@mui/icons-material/Login';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import Grid3x3Icon from '@mui/icons-material/Grid3x3';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import LockIcon from '@mui/icons-material/Lock';
-import SettingsIcon from '@mui/icons-material/Settings';
 
+
+// Icons
+    import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
+    import LoginIcon from '@mui/icons-material/Login';
+    import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+    import IDIcon from '@mui/icons-material/Grid3x3';
+    import UserIcon from '@mui/icons-material/PersonOutline';
+    import EmailIcon from '@mui/icons-material/MailOutline';
+    import PasswordIcon from '@mui/icons-material/Lock';
+    import ActionsIcon from '@mui/icons-material/Settings';
+    import EditIcon from '@mui/icons-material/Edit';
+    import DeleteIcon from '@mui/icons-material/DeleteOutline';
+    import SaveIcon from '@mui/icons-material/Check';
+    import CancelIcon from '@mui/icons-material/DoNotDisturbAlt';
+
+
+import UsersListView from './utils/manage'
 
 const Editor = () => {
     return(
@@ -74,32 +83,69 @@ const Editor = () => {
                         <div className="Page Register" id='Register'></div>
 
                         <div className="Page Manage" id="Manage">
-                            <div className='Head'>
-
-                                <div className="ID">
-                                    <p>ID</p>
+                            <div className="Table">
+                                <div className="Head">
+                                    <div className="Row">
+                                        <div className="Cell C1" id='ID'>
+                                            <IDIcon/>
+                                            ID
+                                        </div>
+                                        <div className="Cell C2" id='Username'>
+                                            <UserIcon/>
+                                            Username
+                                        </div>
+                                        <div className="Cell C3" id='Email'>
+                                            <EmailIcon/>
+                                            E-mail
+                                        </div>
+                                        <div className="Cell C4" id='Password'>
+                                            <PasswordIcon/>
+                                            Password
+                                        </div>
+                                        <div className="Cell C5" id="Actions">
+                                            <ActionsIcon/>
+                                            Actions
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div className="Username">
-                                    <p>Username</p>
-                                </div>
+                                <div className="Body">
 
-                                <div className="E-mail">
-                                    <p>E-mail</p>
-                                </div>
+                                    <UsersListView/>
 
-                                <div className="Password">
-                                    <p>Password</p>
-                                </div>
+                                    {/* <div className="Row EditMode">
 
-                                <div className="Actions">
-                                    <p>Actions</p>
-                                </div>
+                                        <div className="Cell C1" id="DataID">
+                                            <p>15</p>
+                                        </div>
 
+                                        <div className="Cell C2 Editing" id="DataUsername">
+                                            <input type='text' placeholder='Edit username' defaultValue='mchta'/>
+                                        </div>
+
+                                        <div className="Cell C3 Editing" id="DataEmail">
+                                            <input type='text' placeholder='Edit e-mail' defaultValue='maderimata9lwa@gmail.com'/>
+                                        </div>
+
+                                        <div className="Cell C4 Editing" id="DataPassword">
+                                            <input type='text' placeholder='Edit password' defaultValue='Elach ana m3gaz'/>
+                                        </div>
+
+                                        <div className="Cell C5" id="DataActions">
+                                            <div className="Button Secondary Edit">
+                                                <CancelIcon/>
+                                            </div>
+                                            <div className="Button Primary Delete">
+                                                <SaveIcon/>
+                                            </div>
+                                        </div>
+
+                                    </div> */}
+
+                                </div>
                             </div>
 
-                            <div className='Row'>
-                            </div>
+
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { Component } from 'react';
 
 // Icons
     import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
@@ -19,9 +18,12 @@ import React from 'react';
 import UsersListView from './utils/manage'
 
 const Editor = () => {
-    return(
-        <div className="Container">
 
+
+
+
+    return(
+        <div className="Container" id='Container'>
             <div className="Editor" id='drag'>
 
                 <section id="Drag"></section>
@@ -66,17 +68,7 @@ const Editor = () => {
                 </div>
                 {/* Content Section */}
                 <div className="Content">
-                        <div className="Header">
-                            <div className="Title">
-                                <h1 id='Title'>USERS LIST</h1>
-                                <p id='Description'>Create, Read, Update & Delete</p>
-                            </div>
-
-                            <div className='Button' id='Button'>
-                                Add User
-                            </div>
-
-                        </div>
+                        <Header/>
                     <div className="Section" id="Section">
                         <div className="Page Login" id="Login"></div>
 
@@ -84,63 +76,12 @@ const Editor = () => {
 
                         <div className="Page Manage" id="Manage">
                             <div className="Table">
-                                <div className="Head">
-                                    <div className="Row">
-                                        <div className="Cell C1" id='ID'>
-                                            <IDIcon/>
-                                            ID
-                                        </div>
-                                        <div className="Cell C2" id='Username'>
-                                            <UserIcon/>
-                                            Username
-                                        </div>
-                                        <div className="Cell C3" id='Email'>
-                                            <EmailIcon/>
-                                            E-mail
-                                        </div>
-                                        <div className="Cell C4" id='Password'>
-                                            <PasswordIcon/>
-                                            Password
-                                        </div>
-                                        <div className="Cell C5" id="Actions">
-                                            <ActionsIcon/>
-                                            Actions
-                                        </div>
-                                    </div>
-                                </div>
+
+                                <Head/>
 
                                 <div className="Body">
 
                                     <UsersListView/>
-
-                                    {/* <div className="Row EditMode">
-
-                                        <div className="Cell C1" id="DataID">
-                                            <p>15</p>
-                                        </div>
-
-                                        <div className="Cell C2 Editing" id="DataUsername">
-                                            <input type='text' placeholder='Edit username' defaultValue='mchta'/>
-                                        </div>
-
-                                        <div className="Cell C3 Editing" id="DataEmail">
-                                            <input type='text' placeholder='Edit e-mail' defaultValue='maderimata9lwa@gmail.com'/>
-                                        </div>
-
-                                        <div className="Cell C4 Editing" id="DataPassword">
-                                            <input type='text' placeholder='Edit password' defaultValue='Elach ana m3gaz'/>
-                                        </div>
-
-                                        <div className="Cell C5" id="DataActions">
-                                            <div className="Button Secondary Edit">
-                                                <CancelIcon/>
-                                            </div>
-                                            <div className="Button Primary Delete">
-                                                <SaveIcon/>
-                                            </div>
-                                        </div>
-
-                                    </div> */}
 
                                 </div>
                             </div>
@@ -155,3 +96,52 @@ const Editor = () => {
 };
 
 export default Editor;
+
+
+
+function Header(){
+    return(
+        <div className="Header">
+                            
+            <div className="Title">
+                <h1 id='Title'>USERS LIST</h1>
+                <p id='Description'>Create, Read, Update & Delete</p>
+            </div>
+
+            <div className='Button' id='Button'>
+                Add User
+            </div>
+
+        </div>
+    )
+}
+
+
+function Head() {
+    return(
+    <div className="Head">
+        <div className="Row">
+            <div className="Cell C1" id='ID'>
+                <IDIcon/>
+                ID
+            </div>
+            <div className="Cell C2" id='Username'>
+                <UserIcon/>
+                Username
+            </div>
+            <div className="Cell C3" id='Email'>
+                <EmailIcon/>
+                E-mail
+            </div>
+            <div className="Cell C4" id='Password'>
+                <PasswordIcon/>
+                Password
+            </div>
+            <div className="Cell C5" id="Actions">
+                <ActionsIcon/>
+                Actions
+            </div>
+        </div>
+    </div>
+    )
+}

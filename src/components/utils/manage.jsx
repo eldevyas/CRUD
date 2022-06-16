@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client'
 
 
@@ -7,6 +7,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import SaveIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/DoNotDisturbAlt';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 // Each user component.
 class User extends React.Component {
@@ -23,13 +29,15 @@ class User extends React.Component {
             refID: '',
             refUsername: '',
             refEmail: '',
-            refPassword: ''        
+            refPassword: ''   
         };
 
         this.refID = this.props.id;
         this.refUsername = this.props.username;
         this.refEmail = this.props.email;
         this.refPassword = this.props.password;
+
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
 
@@ -37,8 +45,48 @@ class User extends React.Component {
         this.setState({isEditing: true});
     }
 
+
     handleDelete() {
-        ReactDOM.unmountComponentAtNode(this)
+        $.ajax({  
+            type: 'POST',
+            url: 'http://localhost/CRUD/server/api/delete.php',
+            data: {
+                id: this.state.id
+            },
+            success: function(response) {
+                toast.success('User deleted successfully!', {
+                    position: "bottom-left",
+                    autoClose: 50000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    icon: CheckCircleIcon
+                });
+                console.log(response);
+
+                // Remove the user from the list.
+                
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                toast.error('Error deleting user!', {
+                    position: "bottom-left",
+                    autoClose: 50000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    icon: CheckCircleIcon
+                });
+                console.log(' response: ', jqXHR, textStatus, errorThrown)
+
+                return false;
+            }
+        })
+
+        this.props.rerender();
     }
 
     handleCancel() {
@@ -48,12 +96,43 @@ class User extends React.Component {
     }
 
     handleSave() {
+        $.ajax({  
+            type: 'POST',
+            url: 'http://localhost/CRUD/server/api/update.php', 
+            data: {
+                id: this.refID,
+                username: this.refUsername,
+                email: this.refEmail,
+                password: this.refPassword
+            },
+            success: function() {
+                toast.success("Successfully updated the user information.",{
+                    position: "bottom-left",
+                    autoClose: 50000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    icon: CheckCircleIcon
+                    });
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                toast.error("Error updating the user information.");
+                console.log(' response: ', jqXHR, textStatus, errorThrown)
+            }
+        })
         // Update the state with the new values. As well as changing the display back to the original.
         this.setState({isEditing: false, id: this.refID, username: this.refUsername, email: this.refEmail, password: this.refPassword});
     }
 
+
+
+    
     render() {
         let DisplayMode, EditMode;
+
+        
 
         DisplayMode = (
             <div className="Row">
@@ -120,7 +199,9 @@ class User extends React.Component {
          };
 
         return (
-           <CurrentMode/>
+            <>
+                <CurrentMode/>
+            </>
         );
     };
 };
@@ -135,28 +216,110 @@ class UsersListView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            users: [
-                {'ID': 15, 'Username': 'mchta', 'Email': 'maderimata9lwa@gmail.com', 'Password': 'Elach ana m3gaz'},
-                {'ID': 16, 'Username':'jason', 'Email':'jason@gmail.com', 'Password': 'jasonspassword'},
-                {'ID': 17, 'Username':'billy', 'Email':'billy@gmail.com', 'Password': 'billypassword'}
-            ]
+            isLoaded: false,
+            error: null,
+            users: [],
+            counter: 0
         };
+        
+    };
+
+    rerender = () => {
+        this.forceUpdate();
+    };
+    forceUpdate = () => {
+        this.setState((state) => ({
+            counter: state.counter + 1,
+            isLoaded: false
+        }));
+    };
+
+    componentDidMount() {
+        // Fetching data from the server.
+        fetch("http://localhost/CRUD/server/api/rea.php")
+          .then(res => res.json())
+          .then(
+            (result) => {
+              this.setState({
+                isLoaded: true,
+                users: result
+              });
+            },
+            (error) => {
+              this.setState({
+                isLoaded: false,
+                error
+              });
+              console.log(error)
+            }
+        )
     }
 
+    componentDidUpdate(prevProps) {
+        // Typical usage (don't forget to compare props):
+        if (this.props.isLoaded !== prevProps.isLoaded) {
+            console.log('Rerendering..., calling reload function.');
+            fetch("http://localhost/CRUD/server/api/read.php")
+            .then(res => res.json())
+            .then((result) => {
+                this.setState({
+                  isLoaded: true,
+                  users: result
+                });
+              },
+              (error) => {
+                this.setState({
+                  isLoaded: false,
+                  error
+                });
+                console.log(error)
+              }
+          )
+        }
+      }
 
-
-
+    
     render() {
-        return (
-            <>
-            {
-                // Foreach user in the users array, create a new User component 
-                this.state.users.map((user) => {
-                    return <User key={user.ID} id={user.ID} username={user.Username} email={user.Email} password={user.Password}/>
-                })
-            }
-            </>
-        );
+        return this.state.isLoaded ?
+                // If the data is loaded, render the users.        
+                (
+                    <>
+                    {
+                        // Foreach user in the users array, create a new User component
+                        this.state.users.map((user) => {
+                            return <User rerender={this.rerender} key={user.id} id={user.id} username={user.username} email={user.email} password={user.password}/>
+                        })
+                    }
+                    </>
+                ) 
+                // If the data is not loaded, display a loading message.
+                : (
+
+                <div className='User-Loading'>
+                   <div className='Loading'>
+                        <div className="loader">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+
+                    <div className='User-Loading-Text'>
+                        <h3>Loading...</h3>
+
+                        <p>Taking too long? Check the API link if is connected.</p>
+
+                        <div className='button' onClick={this.handleRefresh}>
+                            <RefreshIcon/>
+                            Refresh
+                        </div>
+                    </div>
+                </div>
+                
+                )
     }
 }
 

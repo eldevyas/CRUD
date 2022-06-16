@@ -86,3 +86,7 @@
     justify-content: flex-start;
     align-items: center;
 }
+
+@mixin MacOSBoxShadow {
+    box-shadow: 0 22px 70px 4px rgba(0, 0, 0, 0.56);
+}

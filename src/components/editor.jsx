@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 
 // Icons
     import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
@@ -18,9 +18,6 @@ import React, { Component } from 'react';
 import UsersListView from './utils/manage'
 
 const Editor = () => {
-
-
-
 
     return(
         <div className="Container" id='Container'>
@@ -100,19 +97,35 @@ export default Editor;
 
 
 function Header(){
-    return(
-        <div className="Header">
-                            
-            <div className="Title">
-                <h1 id='Title'>USERS LIST</h1>
-                <p id='Description'>Create, Read, Update & Delete</p>
-            </div>
+    let [isAddingUser, setIsAddingUser] = useState(false);
 
-            <div className='Button' id='Button'>
-                Add User
-            </div>
 
+    return (isAddingUser ? 
+
+    <div className="Header">
+        <div className="Title">
+            <h1 id='Title'>USERS LIST</h1>
+            <p id='Description'>Create, Read, Update & Delete</p>
         </div>
+
+        <div className='Button' id='Button' onClick={e => {setIsAddingUser(true)}}>
+            Add User
+        </div>
+    </div> 
+
+    :
+
+    <div className="Header">
+        <div className="Title">
+            <h1 id='Title'>ADD USER</h1>
+            <p id='Description'>Create a new user</p>
+        </div>
+
+        <div className='Button' id='Button' onClick={e => {setIsAddingUser(false)}}>
+            Cancel
+        </div>
+    </div>
+    
     )
 }
 

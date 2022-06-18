@@ -6,6 +6,10 @@
     font-family: 'Poppins', sans-serif;
 }
 
+html {
+    overflow: overlay !important;
+}
+
 @import 'variables.scss';
 @import 'mixins.scss';
 @import 'functions.scss';

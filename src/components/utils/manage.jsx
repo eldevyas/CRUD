@@ -37,7 +37,7 @@ class User extends React.Component {
         this.refEmail = this.props.email;
         this.refPassword = this.props.password;
 
-        this.handleDelete = this.handleDelete.bind(this);
+        this.Delete = this.Delete.bind(this);
     }
 
 
@@ -46,53 +46,14 @@ class User extends React.Component {
     }
 
 
-    handleDelete() {
-        $.ajax({  
-            type: 'POST',
-            url: 'http://localhost/CRUD/server/api/delete.php',
-            data: {
-                id: this.state.id
-            },
-            success: function(response) {
-                toast.success('User deleted successfully!', {
-                    position: "bottom-left",
-                    autoClose: 50000,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    icon: CheckCircleIcon
-                });
-                console.log(response);
-
-                // Remove the user from the list.
-                
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                toast.error('Error deleting user!', {
-                    position: "bottom-left",
-                    autoClose: 50000,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    icon: CheckCircleIcon
-                });
-                console.log(' response: ', jqXHR, textStatus, errorThrown)
-
-                return false;
-            }
-        })
-
-        this.props.rerender();
-    }
-
     handleCancel() {
         this.setState({
             isEditing: false
         });
+    }
+
+    Delete() {
+        this.props.delete(this.props.id);
     }
 
     handleSave() {
@@ -108,7 +69,7 @@ class User extends React.Component {
             success: function() {
                 toast.success("Successfully updated the user information.",{
                     position: "bottom-left",
-                    autoClose: 50000,
+                    autoClose: 3000,
                     hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -149,13 +110,13 @@ class User extends React.Component {
                     <p>{this.state.password}</p>
                 </div>
                 <div className="Cell C5" id='DataActions'>
-                    <div className="Button Secondary Edit">
+                    <div className="Button Secondary Edit"onClick={() => this.handleEdit()}>
                         {/* On click of the Edit button, switch the cells with inputs, and change the buttons to save button*/}
-                        <EditIcon onClick={() => this.handleEdit()} />
+                        <EditIcon/>
                     </div>
     
-                    <div className="Button Primary Delete">
-                        <DeleteIcon onClick={() => this.handleDelete()} />
+                    <div className="Button Primary Delete" onClick={() => this.Delete()}>
+                        <DeleteIcon/>
                     </div>
                 </div>
             </div>
@@ -181,11 +142,11 @@ class User extends React.Component {
                 </div>
 
                 <div className="Cell C5" id="DataActions">
-                    <div className="Button Secondary Edit">
-                        <CancelIcon onClick={() => this.handleCancel()}/>
+                    <div className="Button Secondary Edit" onClick={() => this.handleCancel()}>
+                        <CancelIcon />
                     </div>
-                    <div className="Button Primary Delete">
-                        <SaveIcon onClick= {() => this.handleSave()} />
+                    <div className="Button Primary Delete" onClick= {() => this.handleSave()} >
+                        <SaveIcon/>
                     </div>
                 </div>
 
@@ -219,8 +180,13 @@ class UsersListView extends React.Component {
             isLoaded: false,
             error: null,
             users: [],
-            counter: 0
+            counter: 0,
+            isLoading: false
         };
+
+        this.handleRefresh = this.handleRefresh.bind(this);
+
+        this.handleDelete = this.handleDelete.bind(this);
         
     };
 
@@ -235,63 +201,101 @@ class UsersListView extends React.Component {
     };
 
     componentDidMount() {
-        // Fetching data from the server.
-        fetch("http://localhost/CRUD/server/api/rea.php")
-          .then(res => res.json())
-          .then(
-            (result) => {
-              this.setState({
-                isLoaded: true,
-                users: result
-              });
-            },
-            (error) => {
-              this.setState({
-                isLoaded: false,
-                error
-              });
-              console.log(error)
-            }
-        )
+        this.handleRefresh();
     }
 
-    componentDidUpdate(prevProps) {
-        // Typical usage (don't forget to compare props):
-        if (this.props.isLoaded !== prevProps.isLoaded) {
-            console.log('Rerendering..., calling reload function.');
-            fetch("http://localhost/CRUD/server/api/read.php")
-            .then(res => res.json())
-            .then((result) => {
-                this.setState({
-                  isLoaded: true,
-                  users: result
-                });
-              },
-              (error) => {
-                this.setState({
-                  isLoaded: false,
-                  error
-                });
-                console.log(error)
-              }
-          )
-        }
-      }
+    componentDidUpdate() {
+        console.log("Updated");
+        () => {
+            this.handleRefresh();
+        }, [this.state.users]
+    };
 
-    
+    handleDelete(id) {
+        $.ajax({  
+            type: 'POST',
+            url: 'http://localhost/CRUD/server/api/delete.php',
+            data: {
+                id: id
+            },
+            success: function(response) {
+                toast.success('User deleted successfully!', {
+                    position: "bottom-left",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    icon: CheckCircleIcon
+                });
+                console.log(response);
+
+                // Remove the user from the list.
+                
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                toast.error('Error deleting user!', {
+                    position: "bottom-left",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    icon: CheckCircleIcon
+                });
+                console.log(' response: ', jqXHR, textStatus, errorThrown)
+
+                return false;
+            }
+        })
+
+        this.handleRefresh();
+    }
+
+
+    handleRefresh() {
+        fetch("http://localhost/CRUD/server/api/read.php")
+        .then(res => res.json())
+        .then((result) => {
+            this.setState({
+                isLoading: false,
+                isLoaded: true,
+                users: result
+            });
+        },
+        (error) => {
+            this.setState({
+                isLoading: false,
+                isLoaded: false,
+                error
+            });
+            console.log(error)
+        }
+        )
+        this.rerender();
+    }
+
+
     render() {
+
         return this.state.isLoaded ?
                 // If the data is loaded, render the users.        
-                (
-                    <>
-                    {
-                        // Foreach user in the users array, create a new User component
-                        this.state.users.map((user) => {
-                            return <User rerender={this.rerender} key={user.id} id={user.id} username={user.username} email={user.email} password={user.password}/>
-                        })
-                    }
-                    </>
-                ) 
+
+                    this.state.users.map((user) => {
+                        return (
+                            <User 
+                                rerender={this.rerender} 
+                                key={user.id} 
+                                id={user.id} 
+                                username={user.username} 
+                                email={user.email} 
+                                password={user.password}
+                                delete={this.handleDelete}
+                            />
+                        )
+                    }) 
                 // If the data is not loaded, display a loading message.
                 : (
 
@@ -314,7 +318,7 @@ class UsersListView extends React.Component {
 
                         <div className='button' onClick={this.handleRefresh}>
                             <RefreshIcon/>
-                            Refresh
+                            Retry
                         </div>
                     </div>
                 </div>

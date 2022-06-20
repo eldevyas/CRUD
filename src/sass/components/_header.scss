@@ -1,0 +1,43 @@
+.TopHeader {
+    width: 100vw;
+    height: 50px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    h1 {
+        font-size: 14px;
+        color: rgba($C5, 0.5);
+    }
+    .ThemeChanger {
+        .ThemeButton {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: rgba($C5, 0.25);
+            border: 1px solid rgba($C5, 0.5);
+            cursor: pointer;
+            @include FlexRowJustifyCenter;
+            svg {
+                width: 20px;
+                height: 20px;
+                color: rgba($C5, 0.5);
+            }
+            &:hover {
+                background-color: rgba($C5, 0.5);
+                border: 1px solid rgba($C5, 0.75);
+            }
+            &:active {
+                background-color: rgba($C5, 0.75);
+                border: 2px solid rgba($C3, 1);
+                svg {
+                    color: $C3;
+                }
+            }
+        }
+    }
+}

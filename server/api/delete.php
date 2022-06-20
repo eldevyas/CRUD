@@ -6,13 +6,7 @@ require_once './../config/config.php';
 
 if (isset($_POST['id'])){
     $id = $_POST['id'];
-    $sql = "DELETE FROM users WHERE id = '$id'";
-    $result = $dbh->query($sql);
-    if ($result) {
-        echo 'Successfully updated!';
-    } else {
-        echo 'Error updating!';
-    }
+    $CRUD->deleteUser($id);
 } else {
-    echo 'No requests were made to delete users!';
+    echo 'No request was made to delete a user!';
 }

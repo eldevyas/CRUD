@@ -13,6 +13,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import WarningIcon from '@mui/icons-material/Warning';
+
+import Validator from './../../javascript/functions/validateForm';
+
+
+
 
 // Each user component.
 class User extends React.Component {
@@ -25,11 +31,11 @@ class User extends React.Component {
             username: this.props.username,
             email: this.props.email,
             password: this.props.password,
-
+            
             refID: '',
             refUsername: '',
             refEmail: '',
-            refPassword: ''   
+            refPassword: ''
         };
 
         this.refID = this.props.id;
@@ -57,6 +63,31 @@ class User extends React.Component {
     }
 
     handleSave() {
+        // Validate the form.
+        let validator = new Validator();
+
+        let isValidUsername = validator.validateUserName(this.refUsername),
+            isValidEmail = validator.validateEmail(this.refEmail),
+            isValidPassword = validator.validatePassword(this.refPassword);
+
+
+        if (isValidUsername && isValidEmail && isValidPassword.success) {
+            this.sendSaveRequest();
+        } else {
+            if (!isValidUsername) {
+                toast.warning(`Username is not valid.`, {icon: <WarningIcon/>});
+            }
+            if (!isValidEmail) {
+                toast.warning(`Email is not valid.`, {icon: <WarningIcon/>});
+            }
+            if (!isValidPassword.success) {
+                toast.warning(isValidPassword.message, {icon: <WarningIcon/>});
+            }
+        }
+    }
+
+
+    sendSaveRequest() {
         $.ajax({  
             type: 'POST',
             url: 'http://localhost/CRUD/server/api/update.php', 
@@ -66,8 +97,9 @@ class User extends React.Component {
                 email: this.refEmail,
                 password: this.refPassword
             },
-            success: function() {
-                toast.success("Successfully updated the user information.",{
+            success: function(response) {
+                let Data = JSON.parse(response);
+                toast.success(`Successfully updated ${Data.id}'s informations.`,{
                     position: "bottom-left",
                     autoClose: 3000,
                     hideProgressBar: true,
@@ -76,24 +108,45 @@ class User extends React.Component {
                     draggable: true,
                     progress: undefined,
                     icon: CheckCircleIcon
-                    });
+                });
             },
-            error: function(jqXHR, textStatus, errorThrown){
-                toast.error("Error updating the user information.");
-                console.log(' response: ', jqXHR, textStatus, errorThrown)
+            error: function (jqXHR, exception) {
+                var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+                toast.error(msg,{
+                    position: "bottom-left",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined
+                });
             }
         })
         // Update the state with the new values. As well as changing the display back to the original.
         this.setState({isEditing: false, id: this.refID, username: this.refUsername, email: this.refEmail, password: this.refPassword});
-    }
+    };
 
 
 
     
     render() {
         let DisplayMode, EditMode;
-
-        
 
         DisplayMode = (
             <div className="Row">
@@ -205,7 +258,6 @@ class UsersListView extends React.Component {
     }
 
     componentDidUpdate() {
-        console.log("Updated");
         () => {
             this.handleRefresh();
         }, [this.state.users]
@@ -219,7 +271,8 @@ class UsersListView extends React.Component {
                 id: id
             },
             success: function(response) {
-                toast.success('User deleted successfully!', {
+                let ID = JSON.parse(response);
+                toast.success(`User ${ID} deleted successfully!`, {
                     position: "bottom-left",
                     autoClose: 3000,
                     hideProgressBar: true,
@@ -235,15 +288,14 @@ class UsersListView extends React.Component {
                 
             },
             error: function(jqXHR, textStatus, errorThrown){
-                toast.error('Error deleting user!', {
+                toast.error('Error deleting the user!', {
                     position: "bottom-left",
                     autoClose: 3000,
                     hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
-                    progress: undefined,
-                    icon: CheckCircleIcon
+                    progress: undefined
                 });
                 console.log(' response: ', jqXHR, textStatus, errorThrown)
 
@@ -268,10 +320,18 @@ class UsersListView extends React.Component {
         (error) => {
             this.setState({
                 isLoading: false,
-                isLoaded: false,
-                error
+                isLoaded: false
             });
-            console.log(error)
+            toast.error('Error fetching the API, please check your server.',{
+                position: "bottom-left",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                icon: <WarningIcon />
+            });
         }
         )
         this.rerender();

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import $ from 'jquery';
 import Editor from './components/editor' 
+import TopHeader from './components/utils/header'; 
 import './javascript/main'
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -13,6 +14,10 @@ function App() {
   return (
     <div className="App">
       <div className="Background"></div>
+
+      <TopHeader />
+
+
       <ToastContainer
       position="bottom-left"
       autoClose={5000}

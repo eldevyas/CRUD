@@ -277,8 +277,6 @@ $nfMargin: 20px;
     --toastify-toast-max-height: 40px;
 }
 
-.Toastify__toast {}
-
 
 /** Used to position the icon **/
 
@@ -292,4 +290,12 @@ $nfMargin: 20px;
 
 .Toastify__close-button {
     display: none;
+}
+
+.Toastify__toast-theme--light.Toastify__toast--error {
+    background-color: $ErrorColor !important;
+}
+
+.Toastify__toast-theme--light.Toastify__toast--warning {
+    background-color: $WarningColor !important;
 }

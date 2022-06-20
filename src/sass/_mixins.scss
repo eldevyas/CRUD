@@ -2,9 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: calc(100% - $mgWidth);
-    height: calc(100% - $mgHeight);
-    background: rgba(0, 0, 0, 0);
+    width: calc(100vw - $mgWidth);
+    height: calc(100vw - $mgHeight);
     position: relative;
 }
 

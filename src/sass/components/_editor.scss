@@ -2,6 +2,7 @@
     @include EditorContainer(25px, 25px);
     @include FlexRowJustifyCenter();
     align-items: center;
+    position: relative;
     .Editor {
         position: fixed;
         display: flex;
@@ -194,6 +195,56 @@
                     }
                 }
             }
+            .AddUser {
+                background-color: transparent;
+                .Prombt {
+                    height: 30px;
+                    background-color: #fff;
+                    width: 140px;
+                    border-radius: 5px;
+                    @include FlexRowJustifyBetween;
+                    input {
+                        width: 100%;
+                        height: 100%;
+                        border: none;
+                        outline: none;
+                        padding: 0 5px;
+                        font-size: 10px;
+                        border-radius: 5px;
+                        color: $D4;
+                        &::placeholder {
+                            color: $D4;
+                        }
+                        &:focus {
+                            color: $C3;
+                            border: 1px solid $C3;
+                            outline: none;
+                            &::placeholder {
+                                color: $C4;
+                            }
+                        }
+                    }
+                }
+                .Buttons {
+                    width: 70px;
+                    height: 30px;
+                    @include FlexRowJustifyBetween;
+                    .Button {
+                        height: 30px;
+                        width: 30px;
+                        svg {
+                            font-size: 18px;
+                        }
+                    }
+                    .Button.Secondary {
+                        background: transparent;
+                        border: 1.5px solid $C3;
+                        svg {
+                            color: $C3;
+                        }
+                    }
+                }
+            }
             .Section {
                 position: relative;
                 width: 90%;
@@ -229,6 +280,7 @@
                         width: 100%;
                         height: 100%;
                         @include FlexRowJustifyCenter;
+                        user-select: none;
                         flex-direction: column;
                         .User-Loading-Text {
                             text-align: center;
@@ -244,7 +296,7 @@
                                 $Padding: 12.5px;
                                 padding: calc($Padding / 2.5);
                                 font-size: calc(12px);
-                                @include FlexRowJustifyCenter;
+                                @include FlexRowJustifyCenter();
                                 background-color: $D4;
                                 color: $C5;
                                 border-radius: 5px;

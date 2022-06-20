@@ -10,13 +10,14 @@ if (isset($_POST['id']) && isset($_POST['username']) && isset($_POST['email']) &
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $sql = "UPDATE users SET username = '$username', email = '$email', password = '$password' WHERE id = '$id'";
-    $result = $dbh->query($sql);
-    if ($result) {
-        echo 'Successfully updated!';
-    } else {
-        echo 'Error updating!';
-    }
+    $data = array(
+        'id' => $id,
+        'username' => $username,
+        'email' => $email,
+        'password' => $password
+    );
+
+    $CRUD->updateUser($id, $data);
 } else {
     echo 'No requests were made to update users!';
 }
